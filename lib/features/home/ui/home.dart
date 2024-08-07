@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shopping_app/features/cart/ui/cart_page.dart';
 import 'package:shopping_app/features/home/bloc/home_bloc.dart';
+import 'package:shopping_app/features/home/ui/product_tile_widget.dart';
 import 'package:shopping_app/features/wishlist/ui/wishlist_page.dart';
 
 class Home extends StatefulWidget {
@@ -43,6 +44,7 @@ class _HomeState extends State<Home> {
                 body: Center(child: CircularProgressIndicator()));
                 
           case const (HomeLoadedSuccessState):
+            final successState = state as HomeLoadedSuccessState;
             return Scaffold(
               appBar: AppBar(
                 backgroundColor: Colors.indigo[200],
@@ -62,6 +64,14 @@ class _HomeState extends State<Home> {
                   ),
                 ],
               ),
+              body: ListView.builder(
+                itemCount: successState.products.length,
+                itemBuilder: (context, index) {
+                  return ProductTileWidget(
+                      productDataModel: successState.products[index]);
+                },
+              )
+
             );
 
           case const (HomeErrorState):
