@@ -36,6 +36,18 @@ class _HomeState extends State<Home> {
           Navigator.push(context,
               MaterialPageRoute(builder: (context) => const CartPage()));
         }
+        if(state is HomeProductItemCartedActionState){
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+              content: Text('Product added to cart'),
+              duration: Duration(seconds: 2),
+          ));
+        }
+        if(state is HomeProductItemWishlistedActionState){
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+              content: Text('Product added to wishlist'),
+              duration: Duration(seconds: 2),
+          ));
+        }
       },
       builder: (context, state) {
         switch (state.runtimeType) {
