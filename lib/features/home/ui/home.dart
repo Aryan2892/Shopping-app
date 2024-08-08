@@ -42,37 +42,37 @@ class _HomeState extends State<Home> {
           case const (HomeLoadingState):
             return const Scaffold(
                 body: Center(child: CircularProgressIndicator()));
-                
+
           case const (HomeLoadedSuccessState):
             final successState = state as HomeLoadedSuccessState;
             return Scaffold(
-              appBar: AppBar(
-                backgroundColor: Colors.indigo[200],
-                title: const Text('Aryan \'s Grocery Store'),
-                actions: [
-                  IconButton(
-                    onPressed: () {
-                      homeBloc.add(HomeWishlistButtonNavigtateEvent());
-                    },
-                    icon: const Icon(Icons.favorite),
-                  ),
-                  IconButton(
-                    onPressed: () {
-                      homeBloc.add(HomeCartButtonNavigtateEvent());
-                    },
-                    icon: const Icon(Icons.shopping_cart),
-                  ),
-                ],
-              ),
-              body: ListView.builder(
-                itemCount: successState.products.length,
-                itemBuilder: (context, index) {
-                  return ProductTileWidget(
-                      productDataModel: successState.products[index]);
-                },
-              )
-
-            );
+                appBar: AppBar(
+                  backgroundColor: Colors.indigo[200],
+                  title: const Text('Aryan \'s Grocery Store'),
+                  actions: [
+                    IconButton(
+                      onPressed: () {
+                        homeBloc.add(HomeWishlistButtonNavigtateEvent());
+                      },
+                      icon: const Icon(Icons.favorite),
+                    ),
+                    IconButton(
+                      onPressed: () {
+                        homeBloc.add(HomeCartButtonNavigtateEvent());
+                      },
+                      icon: const Icon(Icons.shopping_cart),
+                    ),
+                  ],
+                ),
+                body: ListView.builder(
+                  itemCount: successState.products.length,
+                  itemBuilder: (context, index) {
+                    return ProductTileWidget(
+                      productDataModel: successState.products[index],
+                      homeBloc: homeBloc,
+                    );
+                  },
+                ));
 
           case const (HomeErrorState):
             return const Scaffold(body: Center(child: Text('Error')));
