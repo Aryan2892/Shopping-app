@@ -10,63 +10,93 @@ class ProductTileWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.all(10),
-      padding: const EdgeInsets.all(10),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        border: Border.all(color: Colors.black),
+    return Card(
+      elevation: 5,
+      margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(15),
       ),
-      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        Container(
-          height: 200,
-          width: double.maxFinite,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            image: DecorationImage(
-              image: NetworkImage(productDataModel.imageUrl),
-              fit: BoxFit.cover,
-            ),
-          ),
-        ),
-        const SizedBox(height: 20),
-        Text(
-          productDataModel.name,
-          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-        ),
-        Text(productDataModel.description),
-        const SizedBox(height: 20),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      child: Padding(
+        padding: const EdgeInsets.all(10),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              "\$${productDataModel.price}",
-              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 20),
-            Row(
-              children: [
-                IconButton(
-                  onPressed: () {
-                    homeBloc.add(HomeProductWishlistButtonClickedEvent(
-                      clickedProduct: productDataModel,
-                    ));
-                  },
-                  icon: const Icon(Icons.favorite),
+            Container(
+              height: 200,
+              width: double.maxFinite,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15),
+                image: DecorationImage(
+                  image: NetworkImage(productDataModel.imageUrl),
+                  fit: BoxFit.cover,
                 ),
-                IconButton(
-                  onPressed: () {
-                    homeBloc.add(HomeProductCartButtonClickedEvent(
-                      clickedProduct: productDataModel,
-                    ));
-                  },
-                  icon: const Icon(Icons.shopping_cart),
+              ),
+            ),
+            const SizedBox(height: 15),
+            Text(
+              productDataModel.name,
+              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              productDataModel.description,
+              style: TextStyle(
+                fontSize: 16,
+                color: Colors.grey[600],
+              ),
+            ),
+            const SizedBox(height: 15),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  "\$${productDataModel.price}",
+                  style: const TextStyle(
+                      fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+                Row(
+                  children: [
+                    ElevatedButton.icon(
+                      onPressed: () {
+                        homeBloc.add(HomeProductWishlistButtonClickedEvent(
+                          clickedProduct: productDataModel,
+                        ));
+                      },
+                      icon: const Icon(Icons.favorite, color: Colors.redAccent),
+                      label: const Text('Wishlist'),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.white,
+                        foregroundColor: Colors.redAccent,
+                        side: BorderSide(color: Colors.redAccent),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                    ElevatedButton.icon(
+                      onPressed: () {
+                        homeBloc.add(HomeProductCartButtonClickedEvent(
+                          clickedProduct: productDataModel,
+                        ));
+                      },
+                      icon: const Icon(Icons.shopping_cart, color: Colors.white),
+                      label: const Text('Cart'),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.green,
+                        foregroundColor: Colors.white,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ],
-            )
+            ),
           ],
         ),
-      ]),
+      ),
     );
   }
 }

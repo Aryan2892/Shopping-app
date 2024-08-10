@@ -7,15 +7,16 @@ environment:
   sdk: '>=3.3.4 <4.0.0'
 
 dependencies:
+  bloc: null
   flutter:
     sdk: flutter
-  bloc:
-  flutter_bloc: 
+  flutter_bloc: null
+  google_fonts: ^6.2.1
 
 dev_dependencies:
+  flutter_lints: ^3.0.0
   flutter_test:
     sdk: flutter
-  flutter_lints: ^3.0.0
 
 flutter:
   uses-material-design: true

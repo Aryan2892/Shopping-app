@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:shopping_app/features/cart/ui/cart_page.dart';
 import 'package:shopping_app/features/home/bloc/home_bloc.dart';
 import 'package:shopping_app/features/home/ui/product_tile_widget.dart';
@@ -59,8 +60,11 @@ class _HomeState extends State<Home> {
             final successState = state as HomeLoadedSuccessState;
             return Scaffold(
                 appBar: AppBar(
-                  backgroundColor: Colors.indigo[200],
-                  title: const Text('Aryan \'s Grocery Store'),
+                  backgroundColor: Colors.indigo[300],
+                  title: Text('Aryan\'s Grocery Store', style: GoogleFonts.oregano(
+                    color: Colors.white,
+                    fontSize: 30,
+                  )),
                   actions: [
                     IconButton(
                       onPressed: () {
@@ -76,14 +80,17 @@ class _HomeState extends State<Home> {
                     ),
                   ],
                 ),
-                body: ListView.builder(
-                  itemCount: successState.products.length,
-                  itemBuilder: (context, index) {
-                    return ProductTileWidget(
-                      productDataModel: successState.products[index],
-                      homeBloc: homeBloc,
-                    );
-                  },
+                body: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ListView.builder(
+                    itemCount: successState.products.length,
+                    itemBuilder: (context, index) {
+                      return ProductTileWidget(
+                        productDataModel: successState.products[index],
+                        homeBloc: homeBloc,
+                      );
+                    },
+                  ),
                 ));
 
           case const (HomeErrorState):
