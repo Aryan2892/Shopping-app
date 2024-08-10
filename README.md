@@ -7,7 +7,7 @@ The purpose of this app is to demonstrate the use of BLOC state management for m
 
 
 ## Screenshots
-![Image1](Image1-flutter.png) ![Image2](image2-flutter.png) ![Image3](image3-flutter.png) 
+![App Preview](assets/Flutter--images.png)
 
 
 ## Acknowledgements
