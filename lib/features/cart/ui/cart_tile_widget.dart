@@ -10,63 +10,79 @@ class CartTileWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.all(10),
-      padding: const EdgeInsets.all(10),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        border: Border.all(color: Colors.black),
+    return Card(
+      margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(15),
       ),
-      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        Container(
-          height: 200,
-          width: double.maxFinite,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            image: DecorationImage(
-              image: NetworkImage(productDataModel.imageUrl),
-              fit: BoxFit.cover,
-            ),
-          ),
-        ),
-        const SizedBox(height: 20),
-        Text(
-          productDataModel.name,
-          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-        ),
-        Text(productDataModel.description),
-        const SizedBox(height: 20),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      elevation: 3,
+      child: Padding(
+        padding: const EdgeInsets.all(15),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              "\$${productDataModel.price}",
-              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            // Product Image
+            ClipRRect(
+              borderRadius: BorderRadius.circular(10),
+              child: Image.network(
+                productDataModel.imageUrl,
+                height: 100,
+                width: 100,
+                fit: BoxFit.cover,
+              ),
             ),
-            const SizedBox(height: 20),
-            Row(
-              children: [
-                IconButton(
-                  onPressed: () {
-                    // cartBloc.add(HomeProductWishlistButtonClickedEvent(
-                    //   clickedProduct: productDataModel,
-                    // ));
-                  },
-                  icon: const Icon(Icons.favorite),
-                ),
-                IconButton(
-                  onPressed: () {
-                    cartBloc.add(CartRemoveFromCartEvent(
-                      productDataModel: productDataModel,
-                    ));
-                  },
-                  icon: const Icon(Icons.shopping_bag),
-                ),
-              ],
-            )
+            const SizedBox(width: 15),
+
+            // Product Details
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    productDataModel.name,
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 5),
+                  Text(
+                    productDataModel.description,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: Colors.grey[600],
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  Text(
+                    "\$${productDataModel.price}",
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.green,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
+            // Remove from Cart Button
+            IconButton(
+              onPressed: () {
+                cartBloc.add(CartRemoveFromCartEvent(
+                  productDataModel: productDataModel,
+                ));
+              },
+              icon: const Icon(
+                Icons.remove_shopping_cart,
+                color: Colors.redAccent,
+              ),
+            ),
           ],
         ),
-      ]),
+      ),
     );
   }
 }
