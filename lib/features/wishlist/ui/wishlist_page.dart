@@ -21,28 +21,40 @@ class _WishlistPageState extends State<WishlistPage> {
 
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
+    return Scaffold(
       appBar: AppBar(
         title: const Text('Your Wishlist'),
+        backgroundColor: Colors.indigo[300],
       ),
       body: BlocConsumer<WishlistBloc, WishlistState>(
         bloc: wishlistBloc,
         listener: (context, state) {},
         listenWhen: (previous, current) => current is WishlistActionState,
-        buildWhen: (previous, current) => current is !WishlistActionState,
+        buildWhen: (previous, current) => current is! WishlistActionState,
         builder: (context, state) {
-          switch (state.runtimeType) {
-            case const (WishlistSuccessState):
-              final successState = state as WishlistSuccessState;
-              return ListView.builder(
-                itemCount: successState.wishlistItems.length,
-                itemBuilder: (context, index) {
-                  return WishlistTileWidget(productDataModel: successState.wishlistItems[index], wishlistBloc: wishlistBloc);
-                },
-              );
-            default:
+          if (state is WishlistSuccessState) {
+            final successState = state as WishlistSuccessState;
+            return ListView.builder(
+              itemCount: successState.wishlistItems.length,
+              itemBuilder: (context, index) {
+                return WishlistTileWidget(
+                  productDataModel: successState.wishlistItems[index],
+                  wishlistBloc: wishlistBloc,
+                );
+              },
+            );
+          } else {
+            return Center(
+              child: Text(
+                'Your wishlist is empty!',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.grey[700],
+                ),
+              ),
+            );
           }
-          return Container();
         },
       ),
     );
